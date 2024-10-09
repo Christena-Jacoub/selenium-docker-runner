@@ -1,8 +1,8 @@
 services:
  hubService:
   image: selenium/hub:4.20
-  ports: ### No need for port mapping, since I won’t able to see the selenium grid in my local
-   - 4444:4444 ## this is need only in order to access hub on my local
+  #ports: ### No need for port mapping, since I won’t able to see the selenium grid in my local
+  # - 4444:4444 ## this is need only in order to access hub on my local
   #  - 4442:4442
   #  - 4443:4443 #####I did comment these since between the services no need to do port mapping since they are on the same network
 
