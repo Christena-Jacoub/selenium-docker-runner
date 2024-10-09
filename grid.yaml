@@ -1,0 +1,34 @@
+services:
+ hubService:
+  image: selenium/hub:4.20
+  ports: ### No need for port mapping, since I won’t able to see the selenium grid in my local
+   - 4444:4444 ## this is need only in order to access hub on my local
+  #  - 4442:4442
+  #  - 4443:4443 #####I did comment these since between the services no need to do port mapping since they are on the same network
+
+ chromeService:
+  image: selenium/node-chrome:4.20
+  shm_size: 2gb ### this used to increase the shared memory since the web browsers needs more memory in order to run
+  depends_on: 
+  - hubService
+  deploy:
+   replicas: 1
+  env_file: .env ### this is used if I have listed all environemnt variables of the service in separate file
+
+ firefoxService:
+  image: selenium/node-firefox:4.20
+  shm_size: 2gb ### this used to increase the shared memory since the web browsers needs more memory in order to run
+  depends_on:
+  - hubService
+  deploy:
+   replicas: 1
+  env_file: .env  ### this is used if I have listed all environemnt variables of the service in separate file
+
+ edgeService:
+  image: selenium/node-edge:4.20
+  shm_size: 2gb ### this used to increase the shared memory since the web browsers needs more memory in order to run
+  depends_on:
+  - hubService
+  deploy:
+   replicas: 1
+  env_file: .env  ### this is used if I have listed all environemnt variables of the service in separate file
