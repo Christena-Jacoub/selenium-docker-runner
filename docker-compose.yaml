@@ -1,0 +1,69 @@
+services:
+ hubService:
+  image: selenium/hub:4.20
+  #ports: ### No need for port mapping, since I won’t able to see the selenium grid in my local
+  # - 4444:4444 ## this is need only in order to access hub on my local
+  #  - 4442:4442
+  #  - 4443:4443 #####I did comment these since between the services no need to do port mapping since they are on the same network
+
+ chromeService:
+  image: selenium/node-chrome:4.20
+  shm_size: 2gb ### this used to increase the shared memory since the web browsers needs more memory in order to run
+  depends_on: 
+  - hubService
+  environment:
+  - SE_EVENT_BUS_HOST=hubService
+  - SE_EVENT_BUS_PUBLISH_PORT=4442
+  - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+  - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+  - SE_NODE_MAX_SESSIONS=4
+
+ firefoxService:
+  image: selenium/node-firefox:4.20
+  shm_size: 2gb ### this used to increase the shared memory since the web browsers needs more memory in order to run
+  depends_on:
+  - hubService
+  environment:
+  - SE_EVENT_BUS_HOST=hubService
+  - SE_EVENT_BUS_PUBLISH_PORT=4442
+  - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+  - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+  - SE_NODE_MAX_SESSIONS=4
+
+ edgeService:
+  image: selenium/node-edge:4.20
+  shm_size: 2gb ### this used to increase the shared memory since the web browsers needs more memory in order to run
+  depends_on:
+  - hubService
+  environment:
+  - SE_EVENT_BUS_HOST=hubService
+  - SE_EVENT_BUS_PUBLISH_PORT=4442
+  - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+  - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+  - SE_NODE_MAX_SESSIONS=4
+
+ vendorPortalService:
+  image: christenajacoub82/selenium
+  depends_on:
+  - firefoxService
+  environment:
+  - BROWSER=firefox
+  - HUB_HOST=hubService
+  - THREAD_COUNT=3
+  - TEST_SUITE=vendor-portal.xml
+  volumes:
+  - ./output/vendor-portal:/home/selenium-docker/test-output
+
+ flightReservationService:
+  image: christenajacoub82/selenium
+  depends_on:
+  - firefoxService
+  environment:
+  - BROWSER=firefox
+  - HUB_HOST=hubService
+  - THREAD_COUNT=3
+  - TEST_SUITE=flight-reservation-jackson.xml
+  volumes:
+  - ./output/flight-reservation:/home/selenium-docker/test-output
+
+
