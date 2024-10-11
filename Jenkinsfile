@@ -6,12 +6,14 @@ pipeline {
     stages {
         stage('Bring grid up') {
             steps {
-                sh "docker compose -f grid.yaml up --scale ${params.BROWSER}Service=2 -d" // this is to make 2 containers
+                // this is to make 2 containers same like: docker compose -f grid.yaml up --scale chromeService=2 -d
+                sh "docker compose -f grid.yaml up --scale ${params.BROWSER}Service=2 -d" // this is the same as
             }
         }
         stage('Run Tests suites') {
             steps {
-               sh "${params.BROWSER} docker compose -f test-suites.yaml up"
+                // same as: BROWSER=chrome docker compose up
+               sh "BROWSER=${params.BROWSER} docker compose -f test-suites.yaml up"
             }
         }
     }
