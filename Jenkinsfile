@@ -1,14 +1,17 @@
 pipeline {
     agent any
+    parameters { // this is the same as environment variable however we can't change their values inside the stages
+        choice choices: ['firefox', 'chrome', 'edge'], description: 'Choose browser', name: 'BROWSER'
+    }
     stages {
         stage('Bring grid up') {
             steps {
-                sh "docker compose -f grid.yaml up -d"
+                sh "docker compose -f grid.yaml up --scale ${params.BROWSER}=2 -d" // this is to make 2 containers
             }
         }
         stage('Run Tests suites') {
             steps {
-               sh "docker compose -f test-suites.yaml up"
+               sh "${params.BROWSER} docker compose -f test-suites.yaml up"
             }
         }
     }

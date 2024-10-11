@@ -12,7 +12,7 @@ services:
   depends_on: 
   - hubService
   deploy:
-   replicas: 1
+   replicas: 0
   env_file: .env ### this is used if I have listed all environemnt variables of the service in separate file
 
  firefoxService:
@@ -21,7 +21,7 @@ services:
   depends_on:
   - hubService
   deploy:
-   replicas: 1
+   replicas: 0
   env_file: .env  ### this is used if I have listed all environemnt variables of the service in separate file
 
  edgeService:
@@ -30,5 +30,5 @@ services:
   depends_on:
   - hubService
   deploy:
-   replicas: 1
+   replicas: 0
   env_file: .env  ### this is used if I have listed all environemnt variables of the service in separate file
