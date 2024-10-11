@@ -18,4 +18,3 @@ services:
   - TEST_SUITE=flight-reservation-jackson.xml
   volumes:
   - ./output/flight-reservation:/home/selenium-docker/test-output
-
