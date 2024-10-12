@@ -13,7 +13,8 @@ pipeline {
         stage('Run Tests suites') {
             steps {
                 // same as: BROWSER=chrome docker compose up
-               sh "BROWSER=${params.BROWSER} docker compose -f test-suites.yaml up"
+                // add option --pull=always to get the latest image every time before running it especially when many dev are working on the same solution
+               sh "BROWSER=${params.BROWSER} docker compose -f test-suites.yaml up --pull=always"
                // this script in groovy and let Jenkins checks if any testng-failed.xml is found in the output dir, it will mark the tests as failed Jenkins
                script{
                     if(fileExists('output/flight-reservation/testng-failed.xml')||fileExists('output/vendor-portal/testng-failed.xml')){
