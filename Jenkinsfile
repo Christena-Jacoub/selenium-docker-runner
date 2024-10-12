@@ -14,6 +14,12 @@ pipeline {
             steps {
                 // same as: BROWSER=chrome docker compose up
                sh "BROWSER=${params.BROWSER} docker compose -f test-suites.yaml up"
+               // this script in groovy and let Jenkins checks if any testng-failed.xml is found in the output dir, it will mark the tests as failed Jenkins
+               script{
+                    if(fileExists('output/flight-reservation/testng-failed.xml')||fileExists('output/vendor-portal/testng-failed.xml')){
+                        error ('Some Tests are failed')
+                    }    
+               }
             }
         }
     }
