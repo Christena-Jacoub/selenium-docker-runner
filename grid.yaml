@@ -13,6 +13,7 @@ services:
   - hubService
   deploy:
    replicas: 0
+   replicas: 0
   env_file: .env ### this is used if I have listed all environemnt variables of the service in separate file
 
  firefoxService:
@@ -22,4 +23,13 @@ services:
   - hubService
   deploy:
    replicas: 0
+  env_file: .env  ### this is used if I have listed all environemnt variables of the service in separate file
+
+ edgeService:
+  image: selenium/node-edge:4.20
+  shm_size: 0gb ### this used to increase the shared memory since the web browsers needs more memory in order to run
+  depends_on:
+  - hubService
+  deploy:
+   replicas: 1
   env_file: .env  ### this is used if I have listed all environemnt variables of the service in separate file
