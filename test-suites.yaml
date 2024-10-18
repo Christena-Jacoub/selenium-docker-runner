@@ -2,9 +2,9 @@ services:
  vendorPortalService:
   image: christenajacoub82/selenium
   environment:
-  - BROWSER=firefox
+  - BROWSER=${BROWSER}
   - HUB_HOST=hubService
-  - THREAD_COUNT=3
+  - THREAD_COUNT=1
   - TEST_SUITE=vendor-portal.xml
   volumes:
   - ./output/vendor-portal:/home/selenium-docker/test-output
@@ -12,11 +12,9 @@ services:
  flightReservationService:
   image: christenajacoub82/selenium
   environment:
-  - BROWSER=firefox
+  - BROWSER ### I can use it like this instead of using it BROWSER=${BROWSER}
   - HUB_HOST=hubService
-  - THREAD_COUNT=3
-  - TEST_SUITE=flight-reservation-jackson.xml
+  - THREAD_COUNT=1
+  - TEST_SUITE=flight-reservation.xml
   volumes:
   - ./output/flight-reservation:/home/selenium-docker/test-output
-
-
