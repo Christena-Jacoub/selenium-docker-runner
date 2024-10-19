@@ -7,8 +7,7 @@ pipeline {
         stage('Bring grid up') {
             steps {
                 // this is to make 2 containers same like: docker compose -f grid.yaml up --scale chromeService=2 -d
-                // this is to make 2 containers same like: docker compose -f grid.yaml up --scale chromeService=2 -d
-                sh "docker compose -f grid.yaml up --scale ${params.BROWSER}Service=2 --scale ${params.BROWSER}Service=1 -d" // this is the same as // this is the same as
+                sh "docker compose -f grid.yaml up --scale ${params.BROWSER}Service=1 -d"
             }
         }
         stage('Run Tests suites') {
@@ -22,15 +21,7 @@ pipeline {
                         error ('Some Tests are failed')
                     }    
                }
-                // same as: BROWSER=chrome docker compose up
-                // add option --pull=always to get the latest image every time before running it especially when many dev are working on the same solution
-               sh "BROWSER=${params.BROWSER} docker compose -f test-suites.yaml up --pull=always"
-               // this script in groovy and let Jenkins checks if any testng-failed.xml is found in the output dir, it will mark the tests as failed Jenkins
-               script{
-                    if(fileExists('output/flight-reservation/testng-failed.xml')||fileExists('output/vendor-portal/testng-failed.xml')){
-                        error ('Some Tests are failed')
-                    }    
-               }
+               
             }
         }
     }
