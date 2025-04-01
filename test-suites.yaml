@@ -1,22 +1,12 @@
 services:
- vendorPortalService:
+ testSuiteService:
   image: christenajacoub82/selenium
   environment:
-  - BROWSER=firefox
+  - BROWSER=${BROWSER}
   - HUB_HOST=hubService
   - THREAD_COUNT=3
-  - TEST_SUITE=vendor-portal.xml
+  - TEST_SUITE=${TEST_SUITE}.xml
+  - GRID_ENABLED=${GRID_ENABLED}
+  - BROWSERSTACK_ENABLED=${BROWSERSTACK_ENABLED}
   volumes:
-  - ./output/vendor-portal:/home/selenium-docker/test-output
-
- flightReservationService:
-  image: christenajacoub82/selenium
-  environment:
-  - BROWSER=firefox
-  - HUB_HOST=hubService
-  - THREAD_COUNT=3
-  - TEST_SUITE=flight-reservation.xml
-  volumes:
-  - ./output/flight-reservation:/home/selenium-docker/test-output
-
-
+  - ./output/${TEST_SUITE}:/home/selenium-docker/test-output
