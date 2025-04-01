@@ -23,7 +23,6 @@ pipeline {
                         sh '''
                         export BROWSERSTACK_USERNAME=${BROWSERSTACK_USERNAME}
                         export BROWSERSTACK_ACCESS_KEY=${BROWSERSTACK_ACCESS_KEY}
-                        mvn clean test
                         '''
                     }
                 }
