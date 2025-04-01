@@ -15,7 +15,7 @@ services:
   - BROWSER=firefox
   - HUB_HOST=hubService
   - THREAD_COUNT=3
-  - TEST_SUITE=flight-reservation-jackson.xml
+  - TEST_SUITE=flight-reservation.xml
   volumes:
   - ./output/flight-reservation:/home/selenium-docker/test-output
 
