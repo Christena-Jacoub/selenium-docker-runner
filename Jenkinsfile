@@ -37,7 +37,7 @@ pipeline {
                 sh "echo BROWSERSTACK_USERNAME=${BROWSERSTACK_USERNAME}"
                 sh "echo BROWSERSTACK_ACCESS_KEY=${BROWSERSTACK_ACCESS_KEY}"
                 // Run tests with the given suite, passing necessary parameters
-                sh "GRID_ENABLED=${params.GRID_ENABLED} BROWSERSTACK_ENABLED=${params.BROWSERSTACK_ENABLED} BROWSER=${params.BROWSER} TEST_SUITE=${params.TEST_SUITE} docker compose -f test-suites.yaml up --pull=always"
+                sh "BROWSERSTACK_USERNAME=${BROWSERSTACK_USERNAME} BROWSERSTACK_ACCESS_KEY=${BROWSERSTACK_ACCESS_KEY} GRID_ENABLED=${params.GRID_ENABLED} BROWSERSTACK_ENABLED=${params.BROWSERSTACK_ENABLED} BROWSER=${params.BROWSER} TEST_SUITE=${params.TEST_SUITE} docker compose -f test-suites.yaml up --pull=always"
                 
                 script {
                     // Check if testng-failed.xml is found in output
